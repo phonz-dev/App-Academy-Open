@@ -1,11 +1,7 @@
 require_relative "item"
 
 class List
-    private
-    attr_reader :items
-
-    public
-    attr_accessor :label
+    attr_reader :items, :label
     def initialize(label)
         @label = label
         @items = []
@@ -47,28 +43,22 @@ class List
 
     def print
         puts "---------------------------------------------------"
-        puts "\t\t#{@label.upcase}"
+        puts "#{label.upcase.center(50)}"
         puts "---------------------------------------------------"
         puts "Index | Item                  | Deadline   | Done"
         puts "---------------------------------------------------"
-        @items.each_with_index do |item, i|
-            if self[i].done == true
-                puts "#{i}     | #{item.title.ljust(22)}| #{item.deadline.ljust(10)} | [✓]"
-            else
-                puts "#{i}     | #{item.title.ljust(22)}| #{item.deadline.ljust(10)} | [ ]"
-            end
+        items.each_with_index do |item, i|
+            item_info = "#{i}     | #{item.title.ljust(22)}| #{item.deadline.ljust(10)} |"
+            puts item_info + (item.done ? " [✓]" : " [ ]")
         end
         puts "---------------------------------------------------"
     end
 
     def print_full_item(index)
-        return if !self.valid_index?(index)
+        return unless valid_index?(index)
         puts "------------------------------------------"
-        if self[index].done == true
-            puts "#{self[index].title.ljust(23)}#{self[index].deadline.ljust(15)} [✓]"
-        else
-            puts "#{self[index].title.ljust(23)}#{self[index].deadline.ljust(15)} [ ]"
-        end
+        item_info = "#{self[index].title.ljust(23)}#{self[index].deadline.ljust(15)}"
+        puts item_info + (self[index].done ? " [✓]" : " [ ]")
         puts "\n"
         puts "#{self[index].description}"
         puts "------------------------------------------"
@@ -102,5 +92,22 @@ class List
 
     def sort_by_date!
         items.sort_by! { |item| item.deadline }
+    end
+
+    def toggle_item(index)
+        self[index].toggle
+    end
+
+    def remove_item(index)
+        return false unless valid_index?(index)
+        items.delete_at(index)
+        true
+    end
+
+    def purge
+        @items.each_with_index do |item, i|
+            @items[i] = nil if item.done 
+        end
+        @items.compact!
     end
 end

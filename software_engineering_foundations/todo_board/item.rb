@@ -1,5 +1,5 @@
 class Item
-    attr_accessor :title, :deadline, :description
+    attr_accessor :title, :deadline, :description, :done
     def self.valid_date?(date_string)
         date_parts = date_string.split("-").map(&:to_i)
         valid_months = (1..12).to_a
@@ -20,6 +20,7 @@ class Item
         @title = title
         @deadline = deadline
         @description = description
+        @done = false
     end
 
     def deadline=(new_deadline)
@@ -27,6 +28,10 @@ class Item
             raise "invalid deadline"
         end
         @deadline = new_deadline
+    end
+
+    def toggle
+        @done = done ? false : true
     end
 end
 
