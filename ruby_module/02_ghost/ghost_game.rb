@@ -16,6 +16,8 @@ class GhostGame
 
     def run
         play_round until game_over?
+        puts "Game over!"
+        puts "#{current_player.name} wins!"
     end
 
     def play_round
@@ -23,28 +25,13 @@ class GhostGame
         display_standings
         take_turn(current_player) until round_over?
         
-        puts "Round over!"
-        puts "#{fragment.capitalize} is a word."
-        puts "#{previous_player.name} earns a letter!"
-        puts ""
-        
-        @losses[previous_player] += 1
-    end
-
-    def current_player
-        players.first
-    end
-
-    def previous_player
-        players.last
-    end
-
-    def next_player!
-        players.rotate!
-    end
-
-    def record(player)
-        "GHOST"[0...@losses[player]]
+        unless game_over?
+            puts "Round over!"
+            puts "#{fragment.capitalize} is a word."
+            puts "#{previous_player.name} earns a letter!"
+            puts ""
+            @losses[previous_player] += 1            
+        end
     end
 
     def take_turn(player)
@@ -73,13 +60,35 @@ class GhostGame
         end
     end
 
+    def current_player
+        players.first
+    end
+
+    def previous_player
+        (players.count - 1).downto(1) do |i|
+            return players[i] if losses[players[i]] < 5
+        end
+    end
+
+    def next_player!
+        players.rotate!
+        players.rotate! until losses[current_player] < 5
+    end
+
+    def record(player)
+        "GHOST"[0...@losses[player]]
+    end
+
     def round_over?
         dictionary.include?(fragment)
     end
 
     def game_over?
-        all_player_losses = losses.values
-        all_player_losses.any? { |loss| loss == 5 }
+        all_player_losses.one? { |loss| loss < 5 }
+    end
+
+    def all_player_losses
+        losses.values
     end
 
     def display_standings
@@ -95,3 +104,9 @@ class GhostGame
     end
 end
 
+if __FILE__ == $PROGRAM_NAME
+    GhostGame.new(Player.new("Rex"),
+        Player.new("Kerwin"),
+        Player.new("Nicole"),
+        ).run
+end
