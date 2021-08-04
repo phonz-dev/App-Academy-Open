@@ -6,7 +6,7 @@ class Player
     end
 
     def guess
-        gets.chomp
+        gets.chomp.downcase
     end
 
     def alert_invalid_guess
