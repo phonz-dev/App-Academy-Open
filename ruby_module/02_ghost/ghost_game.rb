@@ -4,10 +4,10 @@ require_relative "player"
 
 class GhostGame 
     ALPHABET = ("a".."z").to_a
-    attr_reader :dictionary, :players, :fragment, :losses
-
+    MAX_LOSS_COUNT = 5
+    
     def initialize(*players)
-        words = File.readlines("my_dictionary.txt").map(&:chomp)
+        words = File.readlines("dictionary.txt").map(&:chomp)
         @dictionary = Set.new(words)
         @players = players
         @losses = {}
@@ -20,18 +20,19 @@ class GhostGame
         puts "#{current_player.name} wins!"
     end
 
+    private
+    attr_reader :dictionary, :players, :fragment, :losses
+
     def play_round
         @fragment = ""
         display_standings
         take_turn(current_player) until round_over?
         
-        unless game_over?
-            puts "Round over!"
-            puts "#{fragment.capitalize} is a word."
-            puts "#{previous_player.name} earns a letter!"
-            puts ""
-            @losses[previous_player] += 1            
-        end
+        puts "Round over!"
+        puts "#{fragment.capitalize} is a word."
+        puts "#{previous_player.name} earns a letter!"
+        puts ""
+        @losses[previous_player] += 1            
     end
 
     def take_turn(player)
@@ -66,13 +67,13 @@ class GhostGame
 
     def previous_player
         (players.count - 1).downto(1) do |i|
-            return players[i] if losses[players[i]] < 5
+            return players[i] if losses[players[i]] < MAX_LOSS_COUNT
         end
     end
 
     def next_player!
         players.rotate!
-        players.rotate! until losses[current_player] < 5
+        players.rotate! until losses[current_player] < MAX_LOSS_COUNT
     end
 
     def record(player)
