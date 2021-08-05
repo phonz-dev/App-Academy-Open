@@ -13,10 +13,14 @@ class Board
         while empty_positions?
             pair_positions = legal_positions.sample(2)
             random_card_val = ALPHABET.sample
-            # if valid_card_value?(random_card_val)
+            if valid_card_value?(random_card_val)
                 add_card_pair(random_card_val, pair_positions)
-            # end
+            end
         end
+    end
+
+    def empty_positions?
+        board_positions.any? { |pos| valid_position?(pos) }
     end
 
     def legal_positions
@@ -34,7 +38,16 @@ class Board
     end
 
     def valid_position?(pos)
-        self[pos] == nil
+        self[pos].nil?
+    end
+
+    def valid_card_value?(val)
+        previous_values = []
+        if previous_values.include?(val)
+            return false
+        end
+        previous_values << val
+        true
     end
 
     def add_card_pair(card_val, positions)
@@ -43,15 +56,6 @@ class Board
 
     def add_card(value, pos)
         self[pos] = Card.new(value)
-    end
-
-    # Bug
-    # def valid_card_value?(val)
-        
-    # end
-
-    def empty_positions?
-        board_positions.any? { |pos| valid_position?(pos) }
     end
 
     def [](pos)
@@ -73,7 +77,7 @@ class Board
     end
 
     def won?
-        grid.flatten.none? { |pos| pos == nil }
+        grid.flatten.none? { |card| card.to_s == " " }
     end
 
     def reveal(guessed_pos)

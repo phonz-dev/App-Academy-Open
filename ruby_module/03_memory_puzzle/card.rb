@@ -1,9 +1,10 @@
+require "byebug"
 class Card
     attr_reader :face_value, :face_up
 
     def initialize(face_value)
         @face_value = face_value
-        @face_up = true
+        @face_up = false
     end
 
     def hide
@@ -18,11 +19,11 @@ class Card
         face_up ? face_value : " "
     end
 
-    # def card_face_value(card)
-    #     card.face_value
-    # end
+    def ==(other_card)
+        face_value == card_face_value(other_card)
+    end
 
-    # def ==(other_card)
-    #     face_value == card_face_value(other_card)
-    # end
+    def card_face_value(card)
+        card.face_value
+    end
 end
