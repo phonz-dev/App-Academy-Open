@@ -1,5 +1,4 @@
 class Card
-    
     attr_reader :face_value, :face_up
 
     def initialize(face_value)
@@ -16,14 +15,14 @@ class Card
     end
 
     def to_s
-        face_up ? face_value : "_"
+        face_up ? face_value : " "
     end
 
-    def ==(other_card)
-        face_value == card_face_value(other_card)
-    end
+    # def card_face_value(card)
+    #     card.face_value
+    # end
 
-    def card_face_value(card)
-        card.face_value
-    end
+    # def ==(other_card)
+    #     face_value == card_face_value(other_card)
+    # end
 end
