@@ -59,7 +59,6 @@ class Game
     end
 end
 
-if __FILE__ == $PROGRAM_NAME
-    my_game = Game.new("Fonz")
-    my_game.play
-end
+
+my_game = Game.new("Fonz")
+my_game.play

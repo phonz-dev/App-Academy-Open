@@ -1,4 +1,3 @@
-require "byebug"
 class Card
     attr_reader :face_value, :face_up
 

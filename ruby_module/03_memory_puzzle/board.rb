@@ -1,5 +1,5 @@
 require_relative "card"
-require "byebug"
+
 class Board
     attr_reader :grid
 
@@ -21,6 +21,39 @@ class Board
         nil
     end
 
+    def [](pos)
+        row, col = pos
+        @grid[row][col]
+    end
+    
+    def []=(pos, val)
+        row, col = pos
+        @grid[row][col] = val
+    end
+
+    def won?
+        grid.flatten.none? { |card| card.to_s == " " }
+    end
+
+    def reveal(pos)
+        self[pos].reveal
+        self[pos]
+    end
+
+    def face_cards_down
+        board_positions.each { |pos| self[pos].hide }
+        nil
+    end
+
+    def render
+        puts "\s\s#{(0...grid.size).to_a.join(" ")}"
+        grid.each_with_index do |row, idx|
+            puts "#{idx} #{row.join(" ")}"
+        end
+        nil
+    end
+
+    private
     def empty_positions?
         board_positions.any? { |pos| valid_position?(pos) }
     end
@@ -55,42 +88,5 @@ class Board
         self[pos] = Card.new(value)
     end
 
-    def [](pos)
-        row, col = pos
-        @grid[row][col]
-    end
     
-    def []=(pos, val)
-        row, col = pos
-        @grid[row][col] = val
-    end
-
-    def render
-        puts "\s\s#{(0...grid.size).to_a.join(" ")}"
-        grid.each_with_index do |row, idx|
-            puts "#{idx} #{row.join(" ")}"
-        end
-        nil
-    end
-
-    def won?
-        grid.flatten.none? { |card| card.to_s == " " }
-    end
-
-    def reveal(pos)
-        self[pos].reveal
-        self[pos]
-    end
-
-    def face_cards_down
-        board_positions.each { |pos| self[pos].hide }
-        nil
-    end
-end
-
-if __FILE__ == $PROGRAM_NAME
-    my_board = Board.new
-    puts my_board.populate
-    puts my_board.grid
-    puts my_board.render
 end
