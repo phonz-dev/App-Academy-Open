@@ -4,7 +4,7 @@ class Card
 
     def initialize(face_value)
         @face_value = face_value
-        @face_up = false
+        @face_up = true
     end
 
     def hide

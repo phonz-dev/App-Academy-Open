@@ -11,19 +11,21 @@ class Board
 
     def populate
         while empty_positions?
-            pair_positions = legal_positions.sample(2)
+            pair_positions = available_positions.sample(2)
             random_card_val = ALPHABET.sample
+
             if valid_card_value?(random_card_val)
                 add_card_pair(random_card_val, pair_positions)
             end
         end
+        nil
     end
 
     def empty_positions?
         board_positions.any? { |pos| valid_position?(pos) }
     end
 
-    def legal_positions
+    def available_positions
         board_positions.select { |pos| valid_position?(pos) }
     end
 
@@ -42,12 +44,7 @@ class Board
     end
 
     def valid_card_value?(val)
-        previous_values = []
-        if previous_values.include?(val)
-            return false
-        end
-        previous_values << val
-        true
+        grid.flatten.none? { |card| card.to_s == val }
     end
 
     def add_card_pair(card_val, positions)
@@ -73,16 +70,21 @@ class Board
         grid.each_with_index do |row, idx|
             puts "#{idx} #{row.join(" ")}"
         end
-        return
+        nil
     end
 
     def won?
         grid.flatten.none? { |card| card.to_s == " " }
     end
 
-    def reveal(guessed_pos)
-        self[guessed_pos].reveal
-        self[guessed_pos]
+    def reveal(pos)
+        self[pos].reveal
+        self[pos]
+    end
+
+    def face_cards_down
+        board_positions.each { |pos| self[pos].hide }
+        nil
     end
 end
 
