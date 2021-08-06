@@ -29,6 +29,7 @@ class Game
         puts "You guessed all pairs!"
     end
 
+    private
     def make_guess(pos)
         board[pos].reveal
         if previous_guess.nil?
@@ -58,7 +59,6 @@ class Game
         cards.each { |card| card.hide }
     end
 end
-
 
 my_game = Game.new("Fonz")
 my_game.play

@@ -87,6 +87,4 @@ class Board
     def add_card(value, pos)
         self[pos] = Card.new(value)
     end
-
-    
 end
