@@ -85,12 +85,26 @@ def bsearch(array, target)
     end
 end
 
+def merge_sort(array)
+    return array if array.length < 2
+    
+    mid_point = array.length / 2
+    left_half = array.take(mid_point)
+    right_half = array.drop(mid_point)
 
+    sorted_left = merge_sort(left_half)
+    sorted_right = merge_sort(right_half)
 
+    merge(sorted_left, sorted_right)
+end
 
-
-
-
-
-
+def merge(left, right)
+    merged = []
+    debugger
+    until left.empty? || right.empty?
+        merged << (left.first < right.first ? left.shift : right.shift)
+    end
+    debugger
+    merged + left + right
+end
 
