@@ -5,6 +5,6 @@ class Tile
     end
 
     def to_s
-        value == 0 ? nil : value
+        value == 0 ? " " : value
     end
 end
