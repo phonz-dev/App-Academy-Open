@@ -1,5 +1,5 @@
 require_relative "tile"
-require "colorize"
+
 
 class Board
     attr_reader :grid
@@ -20,12 +20,20 @@ class Board
         @grid = grid
     end
 
+    def [](pos)
+        row, col = pos
+        grid[row][col]
+    end
+
+    def []=(pos, val)
+        row, col = pos
+        @grid[row][col] = val
+    end
+
     def render
         puts "\s\s#{(0...grid.size).to_a.join(" ")}"
         grid.each_with_index do |row, idx|
             puts "#{idx} #{row.map(&:to_s).join(" ")}"
         end
     end
-
 end
-
