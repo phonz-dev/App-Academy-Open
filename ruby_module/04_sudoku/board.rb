@@ -4,6 +4,8 @@ require_relative "tile"
 class Board
     attr_reader :grid
 
+    VALUES = (1..9).to_a
+
     def self.from_file(file)
         board = []
         File.readlines(file, chomp: true).each do |line|
@@ -39,5 +41,17 @@ class Board
         grid.each_with_index do |row, idx|
             puts "#{idx} #{row.map(&:to_s).join(" ")}"
         end
+    end
+
+    def win_rows?
+       grid.all? { |row| complete_values?(row.map(&:value)) }       
+    end
+
+    def win_cols?
+        grid.transpose.all? { |col| complete_values?(col.map(&:value)) }
+    end
+
+    def complete_values?(row)
+        VALUES.all? { |val| row.include?(val) }
     end
 end
