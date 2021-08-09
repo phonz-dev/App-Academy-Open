@@ -1,6 +1,5 @@
 require_relative "tile"
 
-
 class Board
     attr_reader :grid
 
@@ -37,7 +36,7 @@ class Board
     end
 
     def render
-        puts "\s\s#{(0...grid.size).to_a.join(" ")}"
+        puts "  #{(0...grid.size).to_a.join(" ")}"
         grid.each_with_index do |row, idx|
             puts "#{idx} #{row.map(&:to_s).join(" ")}"
         end
