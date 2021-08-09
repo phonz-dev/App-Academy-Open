@@ -30,6 +30,10 @@ class Board
         @grid[row][col] = val
     end
 
+    def update_position(pos, val)
+        self[pos] = val
+    end
+
     def render
         puts "\s\s#{(0...grid.size).to_a.join(" ")}"
         grid.each_with_index do |row, idx|
