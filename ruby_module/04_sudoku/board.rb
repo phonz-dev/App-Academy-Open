@@ -46,14 +46,14 @@ class Board
     end
 
     def win_rows?
-       grid.all? { |row| complete_values?(row.map(&:value)) }       
+       grid.all? { |row| solved_set?(row.map(&:value)) }       
     end
 
     def win_cols?
-        grid.transpose.all? { |col| complete_values?(col.map(&:value)) }
+        grid.transpose.all? { |col| solved_set?(col.map(&:value)) }
     end
 
-    def complete_values?(row)
+    def solved_set?(set)
         VALUES.all? { |val| row.include?(val) }
     end
 end
