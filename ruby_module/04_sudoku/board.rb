@@ -5,6 +5,12 @@ class Board
 
     VALUES = (1..9).to_a
 
+    def self.empty_board
+        Array.new(9) do
+            Array.new(9) { Tile.new(0) }
+        end
+    end
+
     def self.from_file(file)
         rows = File.readlines(file).map(&:chomp)
         rows.map! do |row|
@@ -14,7 +20,7 @@ class Board
         rows
     end
 
-    def initialize(grid)
+    def initialize(grid = Board.empty_board)
         @grid = grid
     end
 
