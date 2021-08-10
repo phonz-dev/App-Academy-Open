@@ -35,7 +35,7 @@ class Board
     end
 
     def update_position(pos, val)
-        self[pos] = val
+        self[pos].value = val
     end
 
     def render
