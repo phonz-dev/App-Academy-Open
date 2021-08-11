@@ -17,7 +17,7 @@ class Board
             nums = row.split("").map(&:to_i)
             nums.map { |num| Tile.new(num) }
         end
-        rows
+        self.new(rows)
     end
 
     def initialize(grid = Board.empty_board)
