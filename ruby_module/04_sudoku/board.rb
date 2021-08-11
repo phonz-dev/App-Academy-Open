@@ -86,9 +86,3 @@ class Board
         VALUES.all? { |val| set.include?(val) }
     end
 end
-
-puzzle = Board.from_file("puzzles/sudoku1_almost.txt")
-
-board = Board.new(puzzle)
-
-p board.solved?
