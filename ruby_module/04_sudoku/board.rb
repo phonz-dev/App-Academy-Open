@@ -45,6 +45,12 @@ class Board
         end
     end
 
+    def solved?
+        win_rows? &&
+            win_cols? &&
+            win_three_by_threes?
+    end
+
     def win_rows?
        grid.all? { |row| solved_set?(row.map(&:value)) }       
     end
@@ -80,3 +86,9 @@ class Board
         VALUES.all? { |val| set.include?(val) }
     end
 end
+
+puzzle = Board.from_file("puzzles/sudoku1_almost.txt")
+
+board = Board.new(puzzle)
+
+p board.solved?
