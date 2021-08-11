@@ -1,8 +1,6 @@
 require_relative "tile"
 
 class Board
-    attr_reader :grid
-
     VALUES = (1..9).to_a
 
     def self.empty_board
@@ -82,4 +80,7 @@ class Board
     def solved_set?(set)
         VALUES.all? { |val| set.include?(val) }
     end
+
+    private
+    attr_reader :grid
 end
