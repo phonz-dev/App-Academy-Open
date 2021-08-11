@@ -10,11 +10,20 @@ class Game
     def play
         until board.solved?
             board.render
-            prompt_position
+            pos = nil
+
+            until valid_position?(pos)
+                prompt_position
+                pos = get_position
+
+                unless valid_position?(pos)
+                    puts "Invalid position."
+                end
+            end
         end
     end
 
-    def within_bounds?(pos)
+    def valid_position?(pos)
         row, col = pos
         (0...board.size).include?(row) &&
             (0...board.size).include?(col)
@@ -26,6 +35,10 @@ class Game
 
     def prompt_position
         puts "Enter a position (e.g. '4,5')"
+    end
+
+    def get_position
+        gets.chomp.split(",").map(&:to_i)
     end
 end
 
