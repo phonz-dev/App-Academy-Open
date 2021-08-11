@@ -37,7 +37,7 @@ class Game
                 end
             end
             
-            board.update_position(pos, val)
+            board[pos] = val
         end
         system("clear")
         board.render
