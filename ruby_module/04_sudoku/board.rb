@@ -53,6 +53,10 @@ class Board
         grid.transpose.all? { |col| solved_set?(col.map(&:value)) }
     end
 
+    def win_three_by_threes?
+        all_three_by_threes.all? { |grid| solved_set?(grid.map(&:value)) }
+    end
+
     def all_three_by_threes
         (0...size).map { |index| three_by_three(index, grid) }
     end
@@ -73,6 +77,6 @@ class Board
     end
 
     def solved_set?(set)
-        VALUES.all? { |val| row.include?(val) }
+        VALUES.all? { |val| set.include?(val) }
     end
 end
