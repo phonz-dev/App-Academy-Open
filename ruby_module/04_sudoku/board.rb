@@ -31,11 +31,8 @@ class Board
 
     def []=(pos, val)
         row, col = pos
-        @grid[row][col] = val
-    end
-
-    def update_position(pos, val)
-        self[pos].value = val
+        tile = grid[row][col]
+        tile.value = val
     end
 
     def render
