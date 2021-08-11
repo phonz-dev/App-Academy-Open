@@ -53,6 +53,25 @@ class Board
         grid.transpose.all? { |col| solved_set?(col.map(&:value)) }
     end
 
+    def all_three_by_threes
+        (0...size).map { |index| three_by_three(index, grid) }
+    end
+
+    def size
+        grid.size
+    end
+
+    def three_by_three(index, set)
+        x = (index / 3) * 3
+        y = (index % 3) * 3
+    
+        (x...x + 3).each_with_object([]) do |i, arr|
+            (y...y + 3).each do |j|
+                arr << set[i][j]
+            end
+        end
+    end
+
     def solved_set?(set)
         VALUES.all? { |val| row.include?(val) }
     end
