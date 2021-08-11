@@ -22,6 +22,7 @@ class Tile
     def value=(new_value)
         if given?
             puts "You cannot change a given value."
+            sleep(2)
         else
             @value = new_value
         end
