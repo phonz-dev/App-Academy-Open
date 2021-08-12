@@ -1,5 +1,5 @@
 require 'set'
-
+require "byebug"
 class WordChainer
     attr_reader :dictionary, :current_words, :all_seen_words
 
@@ -31,5 +31,28 @@ class WordChainer
 
     def same_length_words(word, words)
         words.select { |str| word.length == str.length }
+    end
+
+    def run(source)
+        @current_words = [source]
+        @all_seen_words = Set[source]
+
+        until current_words.empty?
+            new_current_words = []
+
+            current_words.each do |current_word|
+                adjacent_current_words = adjacent_words(current_word)
+
+                adjacent_current_words.each do |word|
+                    unless all_seen_words.include?(word)
+                        all_seen_words << word
+                        new_current_words << word
+                    end
+                end
+            end
+            
+            p new_current_words
+            @current_words = new_current_words
+        end
     end
 end
