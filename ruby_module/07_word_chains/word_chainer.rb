@@ -28,8 +28,10 @@ class WordChainer
                 # collect words that are one position different
                 # from 'word.' To accomplish this, I opt to
                 # slicing one position of char at a time from
-                # 'word' and 'str', comparing what remains
-                
+                # both 'word' and 'str', comparing what remains.
+                # If both fragments are equal, then 'str' is
+                # indeed one position different from 'word'
+
                 word_fragment = slice_char(word, i)
                 str_fragment = slice_char(str, i)         
                 words << str if word_fragment == str_fragment
