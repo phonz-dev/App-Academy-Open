@@ -33,13 +33,16 @@ class WordChainer
         words.select { |str| word.length == str.length }
     end
 
-    def run(source)
+    def run(source, target)
         @current_words = [source]
         @all_seen_words = {source => nil}
-
+        puts "Loading dictionary..."
+        sleep(1)
+        puts "Building chain..."
         until current_words.empty?
             explore_current_words
         end
+        build_path(target)
     end
 
     def explore_current_words
@@ -54,11 +57,24 @@ class WordChainer
                 end
             end
         end
-        
-        new_current_words.each do |word|
-            p  "#{word} => #{all_seen_words[word]}"
-        end
-        
         @current_words = new_current_words
     end
+
+    def build_path(target)
+        path = [target]
+        reversed_seen_words = all_seen_words.to_a.reverse.to_h
+        reversed_seen_words.each do |k, v|
+            path.each do |word|
+                path << v if word == k
+            end
+        end
+        puts path.reverse
+    end
+end
+
+if __FILE__ == $PROGRAM_NAME
+    source = ARGV[0]
+    target = ARGV[1]
+    chainer = WordChainer.new("dictionary.txt")
+    chainer.run(source, target)
 end
