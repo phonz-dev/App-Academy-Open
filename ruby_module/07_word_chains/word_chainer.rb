@@ -1,24 +1,38 @@
 require 'set'
 
 class WordChainer
-    attr_reader :dictionary, :current_words, :all_seen_words
-
     def initialize(dictionary_file)
         @dictionary = File.readlines(dictionary_file).map(&:chomp).to_set
     end
 
+    def run(source, target)
+        @current_words = [source]
+        @all_seen_words = {source => nil}
+        puts "Loading dictionary..."
+        sleep(1)
+        puts "Building chain..."
+        explore_current_words until current_words.empty?
+        build_path(target)
+    end
+    
+    private
+    attr_reader :dictionary, :current_words, :all_seen_words
     def adjacent_words(word)
         words = []
-        same_length = same_length_words(word, dictionary)
+        # collect words of the same length from the dictionary,
+        # with the 'word' argument
+        all_same_length_words = same_length_words(word, dictionary)
 
-        same_length.each_with_index do |str, i|
+        all_same_length_words.each_with_index do |str, i|
             (0...word.length).each do |i|
-                word_fragment = slice_char(word, i)
-                str_fragment = slice_char(str, i)
+                # collect words that are one position different
+                # from 'word.' To accomplish this, I opt to
+                # slicing one position of char at a time from
+                # 'word' and 'str', comparing what remains
                 
-                if (word_fragment == str_fragment) && word != str
-                    words << str 
-                end
+                word_fragment = slice_char(word, i)
+                str_fragment = slice_char(str, i)         
+                words << str if word_fragment == str_fragment
             end
         end
 
@@ -30,19 +44,10 @@ class WordChainer
     end
 
     def same_length_words(word, words)
-        words.select { |str| word.length == str.length }
-    end
-
-    def run(source, target)
-        @current_words = [source]
-        @all_seen_words = {source => nil}
-        puts "Loading dictionary..."
-        sleep(1)
-        puts "Building chain..."
-        until current_words.empty?
-            explore_current_words
+        words.select do |str| 
+            word.length == str.length &&
+                word != str
         end
-        build_path(target)
     end
 
     def explore_current_words
@@ -63,12 +68,12 @@ class WordChainer
     def build_path(target)
         path = [target]
         reversed_seen_words = all_seen_words.to_a.reverse.to_h
-        reversed_seen_words.each do |k, v|
+        reversed_seen_words.each do |new_word, new_word_source|
             path.each do |word|
-                path << v if word == k
+                path << new_word_source if word == new_word
             end
         end
-        puts path.reverse
+        puts path.reverse.compact
     end
 end
 
