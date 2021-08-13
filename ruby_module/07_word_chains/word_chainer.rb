@@ -11,7 +11,9 @@ class WordChainer
         puts "Loading dictionary..."
         sleep(1)
         puts "Building chain..."
-        explore_current_words until current_words.empty?
+        until current_words.empty? || all_seen_words.include?(target)
+            explore_current_words 
+        end
         build_path(target)
     end
     
@@ -58,7 +60,7 @@ class WordChainer
             adjacent_current_words = adjacent_words(current_word)
 
             adjacent_current_words.each do |word|
-                unless all_seen_words.keys.include?(word)
+                unless all_seen_words.has_key?(word)
                     @all_seen_words[word] = current_word
                     new_current_words << word
                 end
