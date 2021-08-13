@@ -1,5 +1,5 @@
 require 'set'
-require "byebug"
+
 class WordChainer
     attr_reader :dictionary, :current_words, :all_seen_words
 
@@ -38,14 +38,12 @@ class WordChainer
         @all_seen_words = Set[source]
 
         until current_words.empty?
-            new_current_words = []
-            explore_current_words(current_words, new_current_words)
-            p new_current_words
-            @current_words = new_current_words
+            explore_current_words
         end
     end
 
-    def explore_current_words(current_words, new_current_words)
+    def explore_current_words
+        new_current_words = []
         current_words.each do |current_word|
             adjacent_current_words = adjacent_words(current_word)
 
@@ -56,5 +54,7 @@ class WordChainer
                 end
             end
         end
+        p new_current_words
+        @current_words = new_current_words
     end
 end
