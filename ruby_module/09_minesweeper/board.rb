@@ -23,4 +23,14 @@ class Board
         tile = grid[row][col]
         tile.value = val
     end
+
+    def board_positions
+        positions = []
+        grid.each_index do |row|
+            grid.each_index do |col|
+                positions << [row, col]
+            end
+        end
+        positions
+    end
 end
