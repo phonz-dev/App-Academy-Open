@@ -2,8 +2,8 @@ class Tile
     attr_reader :bomb, :flag, :reveal, :value
 
     def initialize(value = "_")
-        @bomb = value == "B" ? true : false
-        @flag = value == "F" ? true : false
+        @bomb = value == :B ? true : false
+        @flag = value == :F ? true : false
         @reveal = false
         @value = value
     end
