@@ -17,7 +17,11 @@ class Tile
     end
 
     def revealed?
-        reveal
+        @reveal
+    end
+
+    def reveal
+        @reveal = true
     end
 
     def value=(new_value)
@@ -25,6 +29,6 @@ class Tile
     end
 
     def to_s
-        value
+        revealed? ? value : "*"
     end
 end
