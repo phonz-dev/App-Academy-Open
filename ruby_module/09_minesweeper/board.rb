@@ -1,6 +1,7 @@
 require_relative "tile"
 
 class Board
+    attr_reader :grid
 
     def self.empty_board
         Array.new(9) do
@@ -12,6 +13,14 @@ class Board
         @grid = grid
     end
 
-end
+    def [](pos)
+        row, col = pos
+        grid[row][col]
+    end
 
-p Board.new
+    def []=(pos, val)
+        row, col = pos
+        tile = grid[row][col]
+        tile.value = val
+    end
+end
