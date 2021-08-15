@@ -17,7 +17,11 @@ class Tile
     end
 
     def revealed?
-        reveal
+        @reveal
+    end
+
+    def reveal
+        @reveal = true
     end
 
     def value=(new_value)
