@@ -47,6 +47,9 @@ class Board
     end
 
     def render
-        puts grid.map { |row| row.map(&:to_s).join(" ") }
+        puts "  #{(0..8).to_a.join(" ")}"
+        grid.map.with_index do |row, i| 
+            puts "#{i} #{row.map(&:to_s).join(" ")}"
+        end
     end
 end
