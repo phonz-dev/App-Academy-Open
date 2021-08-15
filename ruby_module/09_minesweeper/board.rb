@@ -33,4 +33,20 @@ class Board
         end
         positions
     end
+
+    def place_random_bombs
+        random_positions = board_positions.sample(10)
+        random_positions.each { |pos| self[pos] = :B }
+    end
+
+    def bombed_positions
+        board_positions.select do |pos|
+            tile = self[pos]
+            tile.bombed?
+        end
+    end
+
+    def render
+        puts grid.map { |row| row.map(&:to_s).join(" ") }
+    end
 end
