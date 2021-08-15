@@ -52,4 +52,8 @@ class Board
             puts "#{i} #{row.map(&:to_s).join(" ")}"
         end
     end
+
+    def reveal_tile(pos)
+        self[pos].reveal
+    end
 end
