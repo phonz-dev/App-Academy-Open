@@ -1,17 +1,11 @@
 class Tile
     attr_reader :bomb, :flag, :reveal, :value
 
-    def initialize(value = "_")
+    def initialize
         @bomb = false
         @flag = false
-        @reveal = true
-        @value = value
-
-        if value == "B"
-            @bomb = true
-        elsif value == "F"
-            @flag = true
-        end
+        @reveal = false
+        @value = :_
     end
 
     def bombed?
@@ -30,9 +24,9 @@ class Tile
         @value = new_value
 
         case value
-        when "B"
+        when :B
             @bomb = true
-        when "F"
+        when :F
             @flag = true
         end
     end
