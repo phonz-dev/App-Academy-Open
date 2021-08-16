@@ -56,4 +56,8 @@ class Board
     def reveal_tile(pos)
         self[pos].reveal
     end
+
+    def length
+        grid.length
+    end
 end
