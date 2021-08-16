@@ -67,4 +67,11 @@ class Board
             [row, col + 1]
         end
     end
+
+    def adjacent_right_tile(pos)
+        row, col = pos
+        unless col == 0
+            [row, col - 1]
+        end
+    end
 end
