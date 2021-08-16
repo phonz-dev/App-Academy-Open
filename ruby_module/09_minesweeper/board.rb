@@ -60,4 +60,24 @@ class Board
     def length
         grid.length
     end
+
+    def adjacent_left_tiles
+        left_tiles = {}
+
+        grid.each_with_index do |arr, row|
+            grid.each_index do |col|
+                end_of_row = (arr.length - 1) == col
+                
+                unless end_of_row
+                    left_tiles[[row, col]] = [row, col + 1]
+                end
+            end
+        end
+        
+        left_tiles
+    end
 end
+
+board = Board.new
+
+p board.adjacent_left_tiles
