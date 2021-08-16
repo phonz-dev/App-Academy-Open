@@ -63,15 +63,16 @@ class Board
 
     def adjacent_left_tile(pos)
         row, col = pos
-        unless col >= (self.length - 1)
-            [row, col + 1]
-        end
+        [row, col + 1] unless col >= (self.length - 1)
     end
 
     def adjacent_right_tile(pos)
         row, col = pos
-        unless col == 0
-            [row, col - 1]
-        end
+        [row, col - 1] unless col == 0
+    end
+
+    def adjacent_top_tile(pos)
+        row, col = pos
+        [row - 1, col] unless row == 0
     end
 end
