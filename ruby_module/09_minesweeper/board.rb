@@ -75,4 +75,9 @@ class Board
         row, col = pos
         [row - 1, col] unless row == 0
     end
+
+    def adjacent_bottom_tile(pos)
+        row, col = pos
+        [row + 1, col] unless row == (self.length - 1)
+    end
 end
