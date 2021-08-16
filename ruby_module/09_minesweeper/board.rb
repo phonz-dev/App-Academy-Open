@@ -60,24 +60,4 @@ class Board
     def length
         grid.length
     end
-
-    def adjacent_left_tile(pos)
-        row, col = pos
-        [row, col + 1] unless col >= (self.length - 1)
-    end
-
-    def adjacent_right_tile(pos)
-        row, col = pos
-        [row, col - 1] unless col == 0
-    end
-
-    def adjacent_top_tile(pos)
-        row, col = pos
-        [row - 1, col] unless row == 0
-    end
-
-    def adjacent_bottom_tile(pos)
-        row, col = pos
-        [row + 1, col] unless row == (self.length - 1)
-    end
 end
