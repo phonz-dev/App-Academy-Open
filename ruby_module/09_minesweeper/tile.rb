@@ -1,14 +1,12 @@
-require_relative "board"
-
 class Tile
     attr_reader :bomb, :flag, :reveal, :value, :board
 
-    def initialize
+    def initialize(board)
         @bomb = false
         @flag = false
         @reveal = false
         @value = :_
-        @board = Board.new
+        @board = board
     end
 
     def bombed?
@@ -42,12 +40,18 @@ class Tile
         revealed? ? value : "*"
     end
 
-    def adjacent_left_tile(pos)
+    def adjacent_bottom_left(pos)
+        row, col = pos
+        left = adjacent_left_tile(pos)
+        adjacent_bottom_tile(left) unless col == 0
+    end
+
+    def adjacent_right_tile(pos)
         row, col = pos
         [row, col + 1] unless col >= (board.length - 1)
     end
 
-    def adjacent_right_tile(pos)
+    def adjacent_left_tile(pos)
         row, col = pos
         [row, col - 1] unless col == 0
     end
