@@ -40,6 +40,19 @@ class Tile
         revealed? ? value : "*"
     end
 
+    def neighbors(pos)
+        [
+            adjacent_top_left(pos),
+            adjacent_top_tile(pos),
+            adjacent_top_right(pos),
+            adjacent_left_tile(pos),
+            adjacent_right_tile(pos),
+            adjacent_bottom_left(pos),
+            adjacent_bottom_tile(pos),
+            adjacent_bottom_right(pos)
+    ].compact
+    end
+
     def adjacent_top_right(pos)
         row, col = pos
         right = adjacent_right_tile(pos)
