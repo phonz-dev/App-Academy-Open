@@ -40,6 +40,13 @@ class Tile
         revealed? ? value : "*"
     end
 
+    def adjacent_bottom_right(pos)
+        row, col = pos
+        right = adjacent_right_tile(pos)
+        bottom_right = adjacent_bottom_tile(right)
+        bottom_right unless col == (board.length - 1)
+    end
+
     def adjacent_bottom_left(pos)
         row, col = pos
         left = adjacent_left_tile(pos)
