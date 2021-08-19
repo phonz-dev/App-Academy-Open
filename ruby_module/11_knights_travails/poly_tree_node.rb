@@ -43,4 +43,15 @@ class PolyTreeNode
         end
         nil
     end
+
+    def inspect
+        node_info = {
+            "value" => value,
+            "children" => children
+        }
+        unless parent.nil?
+            node_info["parent"] = parent
+        end
+        node_info
+    end
 end
