@@ -1,7 +1,7 @@
 require_relative "poly_tree_node"
 
 class KnightPathFinder
-    attr_reader :root_node
+    attr_reader :root_node, :considered_positions
 
     POSITION_MAPPER = [
         [1,2],
@@ -35,5 +35,14 @@ class KnightPathFinder
 
     def initialize(start_pos)
         @root_node = PolyTreeNode.new(start_pos)
+        @considered_positions = [start_pos]
+    end
+
+    def new_move_positions(pos)
+        moves = KnightPathFinder.valid_moves(pos).reject do |pos|
+            considered_positions.include?(pos)
+        end
+        considered_positions.concat(moves)
+        moves
     end
 end
