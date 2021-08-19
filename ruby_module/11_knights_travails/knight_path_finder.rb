@@ -1,6 +1,17 @@
 require_relative "poly_tree_node"
 
 class KnightPathFinder
+    POSITION_MAPPER = [
+        [ 1, 2],
+        [-1, 2],
+        [ 1,-2],
+        [-1,-2],
+        [ 2, 1],
+        [ 2,-1],
+        [-2, 1],
+        [-2,-1]
+    ]
+
     def initialize(start_pos)
         @root_node = PolyTreeNode.new(start_pos)
         @considered_positions = [start_pos]
@@ -12,19 +23,10 @@ class KnightPathFinder
         trace_path_back(end_position)
     end
 
+    private_constant :POSITION_MAPPER
+
     private
     attr_reader :root_node, :considered_positions
-
-    POSITION_MAPPER = [
-        [1,2],
-        [-1,2],
-        [1,-2],
-        [-1,-2],
-        [2,1],
-        [2,-1],
-        [-2,1],
-        [-2,-1]
-    ]
 
     def self.valid_moves(pos)
         row, col = pos
@@ -66,14 +68,19 @@ class KnightPathFinder
         end
     end
 
-    def trace_path_back(pos)
-        path = [pos.value]
-        node = pos
-        until node.parent.nil?
-            value = node.parent.value
+    def trace_path_back(end_node)
+        path = [end_node.value]
+        current_node = end_node
+        until current_node.parent.nil?
+            value = current_node.parent.value
             path.unshift(value)
-            node = node.parent
+            current_node = current_node.parent
         end
         path
     end
+end
+
+if __FILE__ == $PROGRAM_NAME
+    kpf = KnightPathFinder.new([0,0])
+    p kpf.find_path([7,7])
 end
