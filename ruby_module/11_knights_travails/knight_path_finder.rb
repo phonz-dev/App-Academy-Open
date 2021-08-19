@@ -30,16 +30,16 @@ class KnightPathFinder
         row, col = pos
         valid_positions = []
         POSITION_MAPPER.each do |(r1, c1)|
-            new_row = row + r1
-            new_col = col + c1
-            if KnightPathFinder.valid_pos?(new_row, new_col)
-                valid_positions << [new_row, new_col]
+            pos = [row + r1, col + c1]
+            if KnightPathFinder.valid_pos?(pos)
+                valid_positions << pos
             end
         end
         valid_positions
     end
 
-    def self.valid_pos?(row, col)
+    def self.valid_pos?(pos)
+        row, col = pos
         board_range = (0..7).to_a
         board_range.include?(row) &&
             board_range.include?(col)
