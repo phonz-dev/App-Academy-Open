@@ -1,9 +1,8 @@
 class PolyTreeNode
     attr_reader :value, :parent, :children
+
     def initialize(value)
-        @value = value
-        @parent = nil
-        @children = []
+        @value, @parent, @children = value, nil, []
     end
 
     def parent=(new_parent)
@@ -21,5 +20,27 @@ class PolyTreeNode
             raise "Node does not exist"
         end
         child_node.parent = nil
+    end
+
+    def dfs(target_value)
+        return self if value == target_value
+        children.each do |child|
+            result = child.dfs(target_value)
+            return result unless result.nil?
+        end
+        nil
+    end
+
+    def bfs(target_value)
+        return self if value == target_value
+        queue = [self]
+        until queue.empty?
+            node = queue.shift
+            node.children.each do |child|
+                return child if child.value == target_value
+                queue << child
+            end
+        end
+        nil
     end
 end
