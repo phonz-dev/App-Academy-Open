@@ -45,4 +45,18 @@ class KnightPathFinder
         considered_positions.concat(moves)
         moves
     end
+
+    def build_move_tree
+        queue = [root_node]
+
+        until queue.empty?
+            node = queue.shift
+            moves = new_move_positions(node.value)
+            moves.each do |move| 
+                new_node = PolyTreeNode.new(move)
+                node.add_child(new_node)
+                queue << new_node
+            end
+        end
+    end
 end
