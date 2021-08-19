@@ -1,6 +1,18 @@
 require_relative "poly_tree_node"
 
 class KnightPathFinder
+    def initialize(start_pos)
+        @root_node = PolyTreeNode.new(start_pos)
+        @considered_positions = [start_pos]
+        build_move_tree
+    end
+
+    def find_path(end_pos)
+        end_position = root_node.bfs(end_pos)
+        trace_path_back(end_position)
+    end
+
+    private
     attr_reader :root_node, :considered_positions
 
     POSITION_MAPPER = [
@@ -33,12 +45,6 @@ class KnightPathFinder
             board_range.include?(col)
     end
 
-    def initialize(start_pos)
-        @root_node = PolyTreeNode.new(start_pos)
-        @considered_positions = [start_pos]
-        build_move_tree
-    end
-
     def new_move_positions(pos)
         moves = KnightPathFinder.valid_moves(pos).reject do |pos|
             considered_positions.include?(pos)
@@ -58,11 +64,6 @@ class KnightPathFinder
                 queue << new_node
             end
         end
-    end
-
-    def find_path(end_pos)
-        end_position = root_node.bfs(end_pos)
-        trace_path_back(end_position)
     end
 
     def trace_path_back(pos)
