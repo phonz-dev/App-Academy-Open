@@ -1,19 +1,28 @@
 class Board
   attr_accessor :cups
 
+  STORES = [6, 13]
+
   def initialize(name1, name2)
     @name1 = name1
     @name2 = name2
-    @cups = Array.new(14) { Array.new(4, :stone) }
-              .map.with_index { |arr, i| i == 6 || i == 13 ? [] : arr }
+    @cups = Array.new(14)
+    place_stones
   end
 
   def place_stones
     # helper method to #initialize every non-store cup with four stones each
+    cups.each_index do |idx|
+      if STORES.include?(idx)
+        cups[idx] = []
+      else
+        cups[idx] = Array.new(4, :stone)
+      end
+    end
   end
 
   def valid_move?(start_pos)
-    unless start_pos.between?(0, 14)
+    unless start_pos.between?(0, 13)
       raise "Invalid starting cup"
     end
 
@@ -23,6 +32,7 @@ class Board
   end
 
   def make_move(start_pos, current_player_name)
+
   end
 
   def next_turn(ending_cup_idx)
