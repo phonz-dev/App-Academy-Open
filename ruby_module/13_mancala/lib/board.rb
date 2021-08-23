@@ -22,13 +22,8 @@ class Board
   end
 
   def valid_move?(start_pos)
-    unless start_pos.between?(0, 13)
-      raise "Invalid starting cup"
-    end
-
-    if cups[start_pos].empty?
-      raise "Starting cup is empty"
-    end
+    raise "Invalid starting cup" unless start_pos.between?(0, 13)
+    raise "Starting cup is empty" if cups[start_pos].empty?
   end
 
   def make_move(start_pos, current_player_name)
@@ -36,13 +31,11 @@ class Board
 
     until cups[start_pos].empty?
       next_pos = (next_pos += 1) % size
-      
       next if current_player_name == @name1 && next_pos == PLAYER_TWO_STORE
-
       next if current_player_name == @name2 && next_pos == PLAYER_ONE_STORE
-
       cups[next_pos] << cups[start_pos].pop
     end
+
     render
     next_turn(next_pos)
   end
@@ -52,10 +45,10 @@ class Board
   end
 
   def next_turn(ending_cup_idx)
-    if !STORES.include?(ending_cup_idx) && cups[ending_cup_idx].count == 1
-      :switch
-    elsif STORES.include?(ending_cup_idx)
+    if STORES.include?(ending_cup_idx)
       :prompt
+    elsif cups[ending_cup_idx].count == 1
+      :switch
     else
       ending_cup_idx
     end
@@ -87,6 +80,5 @@ class Board
     else
       @name2
     end
-
   end
 end
