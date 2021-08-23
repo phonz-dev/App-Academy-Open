@@ -77,5 +77,16 @@ class Board
   end
 
   def winner
+    player_one_points = cups[PLAYER_ONE_STORE].count
+    player_two_points = cups[PLAYER_TWO_STORE].count
+
+    if player_one_points == player_two_points
+      :draw
+    elsif player_one_points > player_two_points
+      @name1
+    else
+      @name2
+    end
+
   end
 end
