@@ -70,9 +70,12 @@ class Board
   end
 
   def one_side_empty?
+    player_one_side = cups.take(6)
+    player_two_side = cups[7..12]
+    sides = [player_one_side, player_two_side]
+    sides.any? { |side| side.all? { |cup| cup.empty? } }
   end
 
   def winner
   end
 end
-
