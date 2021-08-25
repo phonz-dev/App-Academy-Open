@@ -28,4 +28,20 @@ class Board
     def place_pieces
         STARTING_POSITIONS.each { |pos| self[pos] = Piece.new }
     end
+
+    def move_piece(start_pos, end_pos)
+        raise 'no piece to move' unless self[start_pos].is_a?(Piece)
+        unless board_positions.include?(end_pos)
+            raise 'cannot move to desired position' 
+        end
+
+        self[end_pos] = self[start_pos]
+        self[start_pos] = nil
+    end
+
+    def board_positions
+        (0...rows.length).map do |row|
+            (0...rows.length).map { |col| [row, col] }
+        end.flatten(1)
+    end
 end
